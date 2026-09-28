@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// src/config/database.js
->>>>>>> feat/base-de-datos
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
@@ -12,13 +8,7 @@ const pool = mysql.createPool({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'gimnasio_db',
-<<<<<<< HEAD
   port: process.env.DB_PORT || 3306
-=======
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
->>>>>>> feat/base-de-datos
 });
 
 export default pool;
