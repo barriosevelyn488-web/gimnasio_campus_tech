@@ -12,7 +12,7 @@ export default class ClienteMenu {
 
       const { opcion } = await inquirer.prompt([
         {
-          type: 'list',
+          type: 'select',
           name: 'opcion',
           message: 'Seleccione una opción:',
           choices: [
@@ -36,10 +36,10 @@ export default class ClienteMenu {
 
           case 'registrar':
             const datosNuevos = await inquirer.prompt([
-              { name: 'nombre', message: 'Nombre:' },
-              { name: 'apellido', message: 'Apellido:' },
-              { name: 'correo', message: 'Correo electrónico:' },
-              { name: 'telefono', message: 'Teléfono:' }
+              { type: 'input', name: 'nombre', message: 'Nombre:' },
+              { type: 'input', name: 'apellido', message: 'Apellido:' },
+              { type: 'input', name: 'correo', message: 'Correo electrónico:' },
+              { type: 'input', name: 'telefono', message: 'Teléfono:' }
             ]);
             const creado = await ClienteService.registrar(datosNuevos);
             console.log(chalk.green(`\n¡Cliente registrado con éxito! ID: ${creado.id_cliente}`));
@@ -47,7 +47,7 @@ export default class ClienteMenu {
 
           case 'buscar':
             const { idBuscar } = await inquirer.prompt([
-              { name: 'idBuscar', message: 'Ingrese el ID del cliente:' }
+              { type: 'input', name: 'idBuscar', message: 'Ingrese el ID del cliente:' }
             ]);
             const cliente = await ClienteService.buscarClientePorId(idBuscar);
             console.log(chalk.green('\n--- Cliente Encontrado ---'));
@@ -56,13 +56,13 @@ export default class ClienteMenu {
 
           case 'actualizar':
             const { idActualizar } = await inquirer.prompt([
-              { name: 'idActualizar', message: 'ID del cliente a actualizar:' }
+              { type: 'input', name: 'idActualizar', message: 'ID del cliente a actualizar:' }
             ]);
             const datosActualizados = await inquirer.prompt([
-              { name: 'nombre', message: 'Nuevo nombre:' },
-              { name: 'apellido', message: 'Nuevo apellido:' },
-              { name: 'correo', message: 'Nuevo correo:' },
-              { name: 'telefono', message: 'Nuevo teléfono:' }
+              { type: 'input', name: 'nombre', message: 'Nuevo nombre:' },
+              { type: 'input', name: 'apellido', message: 'Nuevo apellido:' },
+              { type: 'input', name: 'correo', message: 'Nuevo correo:' },
+              { type: 'input', name: 'telefono', message: 'Nuevo teléfono:' }
             ]);
             await ClienteService.actualizarCliente(idActualizar, datosActualizados);
             console.log(chalk.green('\n¡Cliente actualizado correctamente!'));
@@ -70,7 +70,7 @@ export default class ClienteMenu {
 
           case 'eliminar':
             const { idEliminar } = await inquirer.prompt([
-              { name: 'idEliminar', message: 'ID del cliente a eliminar:' }
+              { type: 'input', name: 'idEliminar', message: 'ID del cliente a eliminar:' }
             ]);
             await ClienteService.eliminarCliente(idEliminar);
             console.log(chalk.red('\n¡Cliente eliminado correctamente!'));
@@ -85,7 +85,7 @@ export default class ClienteMenu {
       }
 
       if (!salir) {
-        await inquirer.prompt([{ name: 'continuar', message: '\nPresiona Enter para continuar...' }]);
+        await inquirer.prompt([{ type: 'input', name: 'continuar', message: '\nPresiona Enter para continuar...' }]);
       }
     }
   }
