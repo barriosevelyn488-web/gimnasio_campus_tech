@@ -1,0 +1,112 @@
+CREATE DATABASE IF NOT EXISTS gimnasio_db;
+USE gimnasio_db;
+
+
+-- 1. Tabla CLIENTE
+CREATE TABLE IF NOT EXISTS CLIENTE (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    telefono VARCHAR(20),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Tabla PLAN_ENTRENAMIENTO
+CREATE TABLE IF NOT EXISTS PLAN_ENTRENAMIENTO (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    duracion_semanas INT NOT NULL
+);
+
+-- 3. Tabla PLAN_NUTRICIONAL
+CREATE TABLE IF NOT EXISTS PLAN_NUTRICIONAL (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    objetivo VARCHAR(150),
+    calorias_diarias INT
+);
+
+-- 4. Tabla RUTINA
+CREATE TABLE IF NOT EXISTS RUTINA (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50),
+    repeticiones INT
+);
+
+-- 5. Tabla COMIDA_NUTRICIONAL
+CREATE TABLE IF NOT EXISTS COMIDA_NUTRICIONAL (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_comida VARCHAR(100) NOT NULL,
+    tipo_comida VARCHAR(50),
+    calorias INT
+);
+
+-- 6. Tabla CATEGORIA_FINANZA
+CREATE TABLE IF NOT EXISTS CATEGORIA_FINANZA (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    tipo ENUM('INGRESO', 'EGRESO') NOT NULL
+);
+
+-- 7. Tabla DETALLE_PLAN (Relaciona planes de entrenamiento y nutrición)
+CREATE TABLE IF NOT EXISTS DETALLE_PLAN (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plan_entrenamiento_id INT,
+    plan_nutricional_id INT,
+    FOREIGN KEY (plan_entrenamiento_id) REFERENCES PLAN_ENTRENAMIENTO(id) ON DELETE CASCADE,
+    FOREIGN KEY (plan_nutricional_id) REFERENCES PLAN_NUTRICIONAL(id) ON DELETE CASCADE
+);
+
+-- 8. Tabla ASIGNACION_PLAN (Asigna planes a los clientes)
+CREATE TABLE IF NOT EXISTS ASIGNACION_PLAN (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    plan_entrenamiento_id INT,
+    fecha_asignacion DATE NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE,
+    FOREIGN KEY (plan_entrenamiento_id) REFERENCES PLAN_ENTRENAMIENTO(id) ON DELETE CASCADE
+);
+
+-- 9. Tabla CONTRATO
+CREATE TABLE IF NOT EXISTS CONTRATO (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    monto DECIMAL(10, 2) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    estado VARCHAR(20) DEFAULT 'ACTIVO',
+    FOREIGN KEY (cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE
+);
+
+-- 10. Tabla PROGRESO_FISICO
+CREATE TABLE IF NOT EXISTS PROGRESO_FISICO (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    peso DECIMAL(5, 2),
+    altura DECIMAL(5, 2),
+    porcentaje_grasa DECIMAL(5, 2),
+    fecha_registro DATE NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE
+);
+
+-- 11. Tabla SEGUIMIENTO_CLIENTE (Bitácora de auditoría)
+CREATE TABLE IF NOT EXISTS SEGUIMIENTO_CLIENTE (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    observacion TEXT,
+    fecha DATE NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE
+);
+
+-- 12. Tabla FINANZA
+CREATE TABLE IF NOT EXISTS FINANZA (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    categoria_id INT,
+    monto DECIMAL(10, 2) NOT NULL,
+    fecha DATE NOT NULL,
+    descripcion TEXT,
+    FOREIGN KEY (categoria_id) REFERENCES CATEGORIA_FINANZA(id) ON DELETE CASCADE
+);
