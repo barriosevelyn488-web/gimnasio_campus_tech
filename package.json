@@ -1,0 +1,29 @@
+{
+  "name": "gimnasio_campus_tech",
+  "version": "1.0.0",
+  "description": "Sistema de gestión para gimnasio desarrollado en Node.js mediante una interfaz de línea de comandos (CLI) y arquitectura por capas con MySQL.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barriosevelyn488-web/gimnasio_campus_tech.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/barriosevelyn488-web/gimnasio_campus_tech/issues"
+  },
+  "homepage": "https://github.com/barriosevelyn488-web/gimnasio_campus_tech#readme",
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "mysql2": "^3.24.4"
+  }
+}
