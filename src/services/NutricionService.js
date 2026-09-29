@@ -1,14 +1,8 @@
-import { NutricionController } from '../CONTROLADORES/NutricionController.js';
-
+import { NutricionController } from '../controladores/NutricionController.js';
+import { validarEnteroPositivo } from '../utils/validators.js';
 export class NutricionService {
-  static async crearPlan(data) {
-    if (!data.nombre || !data.calorias_diarias) {
-      throw new Error('El nombre y las calorías diarias son obligatorios.');
-    }
-    return await NutricionController.registrarPlanNutricional(data);
-  }
-
-  static async obtenerPlanes() {
-    return await NutricionController.listarPlanesNutricionales();
-  }
+  static crearPlan(d) { const kcal=validarEnteroPositivo(d.calorias_estimadas,'Calorías'); if (!d.descripcion?.trim() || !d.fecha_inicio || !d.fecha_fin || d.fecha_fin<d.fecha_inicio) throw new Error('Descripción y fechas válidas son obligatorias.'); return NutricionController.registrarPlanNutricional({ ...d,cliente_id:validarEnteroPositivo(d.cliente_id,'Cliente'),plan_entrenamiento_id:validarEnteroPositivo(d.plan_entrenamiento_id,'Plan'),calorias_estimadas:kcal }); }
+  static obtenerPlanes() { return NutricionController.listarPlanesNutricionales(); }
+  static registrarComida(d) { if (!Array.isArray(d.alimentos)||!d.alimentos.length) throw new Error('Registra al menos un alimento.'); for(const a of d.alimentos) { if(!a.alimento?.trim()||!a.unidad?.trim()||Number(a.cantidad)<=0||Number(a.calorias_estimadas)<0) throw new Error('Revisa alimento, cantidad, unidad y calorías.'); a.cantidad=Number(a.cantidad); a.calorias_estimadas=Number(a.calorias_estimadas); } return NutricionController.registrarComida({ ...d,plan_nutricional_id:validarEnteroPositivo(d.plan_nutricional_id,'Plan nutricional') }); }
+  static reporteSemanal(id,inicio,fin) { if(!inicio||!fin||fin<inicio) throw new Error('Rango semanal inválido.'); return NutricionController.reporteSemanal(validarEnteroPositivo(id,'Plan nutricional'),inicio,fin); }
 }

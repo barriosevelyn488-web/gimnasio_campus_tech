@@ -1,3 +1,3 @@
-export function formatearMoneda(monto) {
-    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(monto);
-  }
+export function formatearMoneda(monto, moneda = process.env.MONEDA ?? 'GTQ') {
+  return new Intl.NumberFormat('es-GT', { style: 'currency', currency: moneda }).format(Number(monto));
+}

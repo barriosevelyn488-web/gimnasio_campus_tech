@@ -39,6 +39,9 @@ export default class ProgresoMenu {
             { type: 'input', name: 'peso', message: 'Peso (kg):' },
             { type: 'input', name: 'altura', message: 'Altura (m):' },
             { type: 'input', name: 'porcentaje_grasa', message: 'Porcentaje de grasa (%):' },
+            { type: 'input', name: 'medidas', message: 'Medidas (JSON opcional):' },
+            { type: 'input', name: 'fotos', message: 'URLs de fotos como JSON (opcional, ejemplo [\"url\"]):' },
+            { type: 'input', name: 'comentarios', message: 'Comentarios (opcional):' },
             { type: 'input', name: 'fecha_registro', message: 'Fecha (YYYY-MM-DD):' }
           ]);
 

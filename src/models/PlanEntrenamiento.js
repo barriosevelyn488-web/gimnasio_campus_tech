@@ -1,14 +1,14 @@
+const NIVELES = new Set(['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO']);
 export class PlanEntrenamiento {
-    constructor(id, nombre, descripcion, duracion_semanas) {
-      this.id = id;
-      this.nombre = nombre;
-      this.descripcion = descripcion;
-      this.duracion_semanas = duracion_semanas;
-    }
-  
-    static validar(data) {
-      if (!data.nombre || !data.duracion_semanas) {
-        throw new Error('El nombre y la duración en semanas son obligatorios.');
-      }
-    }
+  constructor(data) {
+    const duracion = Number(data.duracion_semanas);
+    const precio = Number(data.precio);
+    const nivel = String(data.nivel ?? '').toUpperCase();
+    if (!data.nombre?.trim() || !data.metas_fisicas?.trim()) throw new Error('Nombre y metas físicas son obligatorios.');
+    if (!Number.isInteger(duracion) || duracion <= 0) throw new Error('La duración debe ser un entero positivo.');
+    if (!NIVELES.has(nivel)) throw new Error('El nivel debe ser PRINCIPIANTE, INTERMEDIO o AVANZADO.');
+    if (!Number.isFinite(precio) || precio < 0) throw new Error('El precio debe ser un número igual o mayor que cero.');
+    Object.assign(this, { ...data, nombre: data.nombre.trim(), duracion_semanas: duracion, nivel, precio });
   }
+  static validar(data) { return new PlanEntrenamiento(data); }
+}

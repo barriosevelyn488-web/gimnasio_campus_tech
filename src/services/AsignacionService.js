@@ -1,14 +1,6 @@
-import { AsignacionController } from '../CONTROLADORES/AsignacionController.js';
-
+import { AsignacionController } from '../controladores/AsignacionController.js';
+import { validarEnteroPositivo, validarMonto } from '../utils/validators.js';
 export class AsignacionService {
-  static async crearAsignacionConContrato(data) {
-    if (!data.cliente_id || !data.plan_entrenamiento_id || !data.monto) {
-      throw new Error('Cliente, plan y monto del contrato son obligatorios.');
-    }
-    return await AsignacionController.registrarAsignacionYContrato(data);
-  }
-
-  static async obtenerContratos() {
-    return await AsignacionController.listarContratos();
-  }
+  static crearAsignacionConContrato(d) { return AsignacionController.registrarAsignacionYContrato({ ...d, cliente_id:validarEnteroPositivo(d.cliente_id,'Cliente'), plan_id:validarEnteroPositivo(d.plan_id ?? d.plan_entrenamiento_id,'Plan'), monto:d.monto === '' || d.monto === undefined ? undefined : validarMonto(d.monto,true) }); }
+  static obtenerContratos() { return AsignacionController.listarContratos(); }
 }

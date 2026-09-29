@@ -38,7 +38,7 @@ export default class ClienteMenu {
             const datosNuevos = await inquirer.prompt([
               { type: 'input', name: 'nombre', message: 'Nombre:' },
               { type: 'input', name: 'apellido', message: 'Apellido:' },
-              { type: 'input', name: 'correo', message: 'Correo electrónico:' },
+              { type: 'input', name: 'email', message: 'Correo electrónico:' },
               { type: 'input', name: 'telefono', message: 'Teléfono:' }
             ]);
             const creado = await ClienteService.registrar(datosNuevos);

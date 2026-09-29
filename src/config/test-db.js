@@ -1,14 +1,10 @@
 import pool from './db.js';
-
-async function testConnection() {
-  try {
-    const [rows] = await pool.query('SELECT 1 + 1 AS resultado');
-    console.log('¡Conexión exitosa a la base de datos! Resultado:', rows[0].resultado);
-    process.exit(0);
-  } catch (error) {
-    console.error('Error al conectar con la base de datos:', error.message);
-    process.exit(1);
-  }
+try {
+  const [rows] = await pool.query('SELECT 1 AS ok');
+  console.log(rows[0].ok === 1 ? 'Conexión MySQL correcta.' : 'Respuesta inesperada de MySQL.');
+} catch (error) {
+  console.error(`No fue posible conectar con MySQL: ${error.message}`);
+  process.exitCode = 1;
+} finally {
+  await pool.end();
 }
-
-testConnection();
