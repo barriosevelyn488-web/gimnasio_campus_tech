@@ -23,6 +23,8 @@ export default class MainMenu {
             { name: '3. Asignación y Contratos (Transacciones)', value: 'contrato' },
             { name: '4. Progreso Físico', value: 'progreso' },
             { name: '5. Gestión Financiera', value: 'finanza' },
+            { name: '6. Planes Nutricionales', value: 'nutricion' },
+            { name: '7. Seguimiento Integral', value: 'seguimiento' },
             { name: '0. Salir de la aplicación', value: 'salir' }
           ]
         }

@@ -1,0 +1,3 @@
+export function formatearMoneda(monto) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(monto);
+  }
