@@ -1,0 +1,46 @@
+import inquirer from 'inquirer';
+import chalk from 'chalk';
+import { MenuFactory } from '../factories/MenuFactory.js';
+
+export default class MainMenu {
+  static async iniciar() {
+    let salir = false;
+
+    while (!salir) {
+      console.clear();
+      console.log(chalk.cyan.bold('========================================='));
+      console.log(chalk.cyan.bold('    SISTEMA DE GESTIÓN DE GIMNASIO CLI   '));
+      console.log(chalk.cyan.bold('========================================='));
+
+      const { modulo } = await inquirer.prompt([
+        {
+          type: 'select',
+          name: 'modulo',
+          message: 'Seleccione un módulo a gestionar:',
+          choices: [
+            { name: '1. Gestión de Clientes', value: 'cliente' },
+            { name: '2. Planes de Entrenamiento', value: 'plan' },
+            { name: '3. Asignación y Contratos (Transacciones)', value: 'contrato' },
+            { name: '4. Progreso Físico', value: 'progreso' },
+            { name: '5. Gestión Financiera', value: 'finanza' },
+            { name: '0. Salir de la aplicación', value: 'salir' }
+          ]
+        }
+      ]);
+
+      if (modulo === 'salir') {
+        console.log(chalk.green('¡Gracias por usar el sistema! Hasta pronto.'));
+        salir = true;
+        process.exit(0);
+      }
+
+      try {
+        const MenuSeleccionado = MenuFactory.crearMenu(modulo);
+        await MenuSeleccionado.mostrarMenu();
+      } catch (error) {
+        console.log(chalk.red(`\n[Error]: ${error.message}`));
+        await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+      }
+    }
+  }
+}
