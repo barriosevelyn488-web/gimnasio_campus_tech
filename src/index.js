@@ -1,10 +1,11 @@
-import ClienteMenu from './commands/ClienteMenu.js';
+import MainMenu from './commands/MainMenu.js';
 
 async function main() {
   try {
-    await ClienteMenu.mostrarMenu();
+    await MainMenu.iniciar();
   } catch (error) {
-    console.error("Error crítico en la aplicación:", error.message);
+    console.error('Error crítico al iniciar la aplicación:', error.message);
+    process.exit(1);
   }
 }
 
