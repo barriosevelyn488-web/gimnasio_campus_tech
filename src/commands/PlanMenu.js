@@ -36,7 +36,7 @@ export default class PlanMenu {
             { type: 'input', name: 'descripcion', message: 'Descripción:' },
             { type: 'input', name: 'duracion_semanas', message: 'Duración en semanas (número):' },
             { type: 'input', name: 'metas_fisicas', message: 'Metas físicas:' },
-            { type: 'list', name: 'nivel', message: 'Nivel:', choices: ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'] },
+            { type: 'select', name: 'nivel', message: 'Nivel:', choices: ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'] },
             { type: 'input', name: 'precio', message: 'Precio:' }
           ]);
 

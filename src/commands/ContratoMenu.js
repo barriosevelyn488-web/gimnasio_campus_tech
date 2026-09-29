@@ -17,7 +17,7 @@ export default class ContratoMenu {
           name: 'opcion',
           message: 'Seleccione una opción:',
           choices: [
-            { name: '1. Listar contratos activos', value: 'listar' },
+            { name: '1. Listar contratos y estados', value: 'listar' },
             { name: '2. Asignar plan y generar contrato (Transacción)', value: 'registrar' },
             { name: '3. Renovar contrato', value: 'renovar' },
             { name: '4. Finalizar contrato', value: 'finalizar' },

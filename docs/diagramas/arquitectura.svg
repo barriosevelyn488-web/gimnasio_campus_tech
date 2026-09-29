@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura del sistema de gimnasio</title>
+  <desc id="desc">Flujo desde el usuario por los menus, servicios, controladores y repositorios hasta MySQL.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52657a"/></marker>
+    <style>
+      .box { fill:#eef5ff; stroke:#3569a8; stroke-width:2; rx:12; }
+      .support { fill:#f4f1ff; stroke:#7556a8; stroke-width:2; rx:12; }
+      .db { fill:#eaf6ec; stroke:#39804a; stroke-width:2; }
+      .title { font: bold 20px Arial, sans-serif; fill:#17324d; text-anchor:middle; }
+      .sub { font: 14px Arial, sans-serif; fill:#34495e; text-anchor:middle; }
+      .edge { fill:none; stroke:#52657a; stroke-width:2.5; marker-end:url(#arrow); }
+      .dash { stroke-dasharray:7 6; }
+    </style>
+  </defs>
+  <rect width="1000" height="620" fill="#ffffff"/>
+  <text x="500" y="42" class="title" font-size="26">Arquitectura por capas</text>
+  <path class="edge" d="M500 120 V165"/><path class="edge" d="M500 235 V280"/><path class="edge" d="M500 350 V395"/><path class="edge" d="M500 465 V510"/>
+  <rect class="box" x="350" y="65" width="300" height="55"/><text class="title" x="500" y="99">Usuario</text>
+  <rect class="box" x="350" y="165" width="300" height="70"/><text class="title" x="500" y="193">Commands / CLI</text><text class="sub" x="500" y="216">Menus, entrada y salida</text>
+  <rect class="box" x="350" y="280" width="300" height="70"/><text class="title" x="500" y="308">Services</text><text class="sub" x="500" y="331">Reglas, validaciones y coordinacion</text>
+  <rect class="box" x="350" y="395" width="300" height="70"/><text class="title" x="500" y="423">Controladores</text><text class="sub" x="500" y="446">Casos de uso y consultas SQL</text>
+  <rect class="db" x="350" y="510" width="300" height="70" rx="28"/><text class="title" x="500" y="552">MySQL</text>
+  <rect class="support" x="40" y="170" width="220" height="65"/><text class="title" x="150" y="198">MenuFactory</text><text class="sub" x="150" y="219">Selecciona el menu</text>
+  <path class="edge dash" d="M260 202 H345"/>
+  <rect class="support" x="740" y="275" width="220" height="65"/><text class="title" x="850" y="303">Models y Utils</text><text class="sub" x="850" y="324">Entidades y apoyo</text>
+  <path class="edge dash" d="M655 315 H735"/>
+  <rect class="support" x="740" y="405" width="220" height="65"/><text class="title" x="850" y="433">Repositories</text><text class="sub" x="850" y="454">Acceso reutilizable donde aplica</text>
+  <path class="edge dash" d="M655 430 H735"/><path class="edge" d="M850 475 V530 H655"/>
+</svg>

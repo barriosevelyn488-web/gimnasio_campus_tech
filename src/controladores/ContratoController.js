@@ -21,7 +21,7 @@ export class ContratoController {
       const [a] = await connection.execute('INSERT INTO asignacion_plan (cliente_id,plan_id,fecha_asignacion) VALUES (?,?,?)',[rows[0].cliente_id,rows[0].plan_id,fechaInicio]);
       const [result] = await connection.execute('INSERT INTO contrato (asignacion_id,monto,condiciones,fecha_inicio,fecha_fin) VALUES (?,?,?,?,?)',[a.insertId,monto,condiciones,fechaInicio,fechaFin]);
       await connection.execute("UPDATE contrato SET estado='RENOVADO' WHERE id_contrato=?",[id]);
-      await connection.execute('UPDATE asignacion_plan SET estado='FINALIZADA' WHERE id_asignacion=(SELECT asignacion_id FROM contrato WHERE id_contrato=?)',[id]);
+      await connection.execute("UPDATE asignacion_plan SET estado='FINALIZADA' WHERE id_asignacion=(SELECT asignacion_id FROM contrato WHERE id_contrato=?)",[id]);
       await connection.commit(); return result.insertId;
     } catch(e) { await connection.rollback(); throw e; } finally { connection.release(); }
   }

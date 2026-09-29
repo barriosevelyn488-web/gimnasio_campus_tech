@@ -61,7 +61,7 @@ export default class ClienteMenu {
             const datosActualizados = await inquirer.prompt([
               { type: 'input', name: 'nombre', message: 'Nuevo nombre:' },
               { type: 'input', name: 'apellido', message: 'Nuevo apellido:' },
-              { type: 'input', name: 'correo', message: 'Nuevo correo:' },
+              { type: 'input', name: 'email', message: 'Nuevo correo:' },
               { type: 'input', name: 'telefono', message: 'Nuevo teléfono:' }
             ]);
             await ClienteService.actualizarCliente(idActualizar, datosActualizados);

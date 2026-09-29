@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "db:check": "node src/config/test-db.js",
+    "db:check": "node src/config/db-check.js",
     "test": "node --test"
   },
   "dependencies": {

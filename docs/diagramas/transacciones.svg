@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="730" viewBox="0 0 900 730" role="img" aria-labelledby="title desc">
+  <title id="title">Transaccion de asignacion y contrato</title>
+  <desc id="desc">Validar datos, abrir transaccion, crear asignacion y contrato, confirmar o revertir.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52657a"/></marker>
+    <style>
+      .step { fill:#eef5ff; stroke:#3569a8; stroke-width:2; rx:12; }
+      .ok { fill:#eaf6ec; stroke:#39804a; stroke-width:2; rx:12; }
+      .fail { fill:#fff0ee; stroke:#b64b43; stroke-width:2; rx:12; }
+      .decision { fill:#fff8e6; stroke:#b58a24; stroke-width:2; }
+      .t { font:bold 19px Arial,sans-serif; fill:#17324d; text-anchor:middle; }
+      .s { font:14px Arial,sans-serif; fill:#34495e; text-anchor:middle; }
+      .e { fill:none; stroke:#52657a; stroke-width:2.5; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <rect width="900" height="730" fill="#fff"/><text x="450" y="42" class="t" font-size="25">Asignacion de plan y creacion de contrato</text>
+  <rect class="step" x="300" y="70" width="300" height="60"/><text class="t" x="450" y="107">Validar cliente, plan y monto</text>
+  <path class="e" d="M450 130 V165"/>
+  <rect class="step" x="300" y="165" width="300" height="60"/><text class="t" x="450" y="202">BEGIN TRANSACTION</text>
+  <path class="e" d="M450 225 V260"/>
+  <rect class="step" x="300" y="260" width="300" height="60"/><text class="t" x="450" y="297">Insertar asignacion</text>
+  <path class="e" d="M450 320 V355"/>
+  <rect class="step" x="300" y="355" width="300" height="60"/><text class="t" x="450" y="392">Insertar contrato relacionado</text>
+  <path class="e" d="M450 415 V450"/>
+  <polygon class="decision" points="450,450 570,510 450,570 330,510"/><text class="t" x="450" y="516">Operacion correcta?</text>
+  <path class="e" d="M390 540 L280 600"/><path class="e" d="M510 540 L620 600"/>
+  <text class="s" x="320" y="570">Si</text><text class="s" x="580" y="570">No</text>
+  <rect class="ok" x="150" y="600" width="260" height="70"/><text class="t" x="280" y="630">COMMIT</text><text class="s" x="280" y="653">Asignacion y contrato guardados</text>
+  <rect class="fail" x="490" y="600" width="260" height="70"/><text class="t" x="620" y="630">ROLLBACK</text><text class="s" x="620" y="653">Sin registros parciales; propagar error</text>
+</svg>

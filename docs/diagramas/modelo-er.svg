@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1040" viewBox="0 0 1200 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Modelo entidad-relacion del sistema</title>
+  <desc id="desc">Resumen de las tablas MySQL actuales y sus claves foraneas principales.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#66788a"/></marker>
+    <style>
+      .card { fill:#f4f8fc; stroke:#3973a8; stroke-width:2; rx:8; }
+      .head { fill:#dceafa; stroke:#3973a8; stroke-width:2; rx:8; }
+      .name { font:bold 16px Arial,sans-serif; fill:#15324b; text-anchor:middle; }
+      .field { font:13px Arial,sans-serif; fill:#263746; }
+      .edge { fill:none; stroke:#66788a; stroke-width:2; marker-end:url(#arrow); }
+      .label { font:12px Arial,sans-serif; fill:#52657a; }
+    </style>
+  </defs>
+  <rect width="1200" height="1040" fill="#fff"/><text x="600" y="35" class="name" font-size="25">Modelo ER actual (resumen de database/schema.sql)</text>
+  <!-- Relaciones dibujadas detras de las tablas -->
+  <path class="edge" d="M240 130 H340"/><path class="edge" d="M540 130 H640"/>
+  <path class="edge" d="M440 190 V270"/><path class="edge" d="M740 190 V270"/>
+  <path class="edge" d="M240 370 H340"/><path class="edge" d="M540 370 H640"/><path class="edge" d="M740 430 V510"/>
+  <path class="edge" d="M440 430 V510"/><path class="edge" d="M740 570 V650"/><path class="edge" d="M940 570 V650"/>
+  <path class="edge" d="M240 730 H340"/><path class="edge" d="M540 730 H640"/><path class="edge" d="M940 730 V830"/>
+  <path class="edge" d="M440 430 C440 600 540 600 640 650"/><path class="edge" d="M740 430 C740 600 540 600 440 650"/>
+  <path class="edge" d="M440 430 C440 800 540 800 640 830"/>
+  <!-- Row 1 -->
+  <g transform="translate(40 70)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">clientes</text><text class="field" x="12" y="58">PK id_cliente</text><text class="field" x="12" y="79">nombre, apellido</text><text class="field" x="12" y="100">email UNIQUE</text></g>
+  <g transform="translate(340 70)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">asignacion_plan</text><text class="field" x="12" y="58">PK id_asignacion</text><text class="field" x="12" y="79">FK cliente_id, plan_id</text><text class="field" x="12" y="100">fecha, estado</text></g>
+  <g transform="translate(640 70)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">plan_entrenamiento</text><text class="field" x="12" y="58">PK id_plan</text><text class="field" x="12" y="79">nombre, duracion, nivel</text><text class="field" x="12" y="100">metas, precio</text></g>
+  <!-- Row 2 -->
+  <g transform="translate(40 270)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">contrato</text><text class="field" x="12" y="58">PK id_contrato</text><text class="field" x="12" y="79">FK asignacion_id UNIQUE</text><text class="field" x="12" y="100">monto, fechas, estado</text></g>
+  <g transform="translate(340 270)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">plan_nutricional</text><text class="field" x="12" y="58">PK id_plan_nutricional</text><text class="field" x="12" y="79">FK cliente_id, plan_entrenamiento_id</text><text class="field" x="12" y="100">calorias, fechas, estado</text></g>
+  <g transform="translate(640 270)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">progreso_fisico</text><text class="field" x="12" y="58">PK id_progreso</text><text class="field" x="12" y="79">FK cliente_id</text><text class="field" x="12" y="100">fecha, peso, grasa</text></g>
+  <!-- Row 3 -->
+  <g transform="translate(40 510)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">categoria_finanza</text><text class="field" x="12" y="58">PK id_categoria</text><text class="field" x="12" y="79">nombre UNIQUE</text><text class="field" x="12" y="100">tipo INGRESO / EGRESO</text></g>
+  <g transform="translate(340 510)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">comida_nutricional</text><text class="field" x="12" y="58">PK id_comida</text><text class="field" x="12" y="79">FK plan_nutricional_id</text><text class="field" x="12" y="100">fecha, dia, tipo</text></g>
+  <g transform="translate(640 510)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">medida_corporal</text><text class="field" x="12" y="58">PK id_medida</text><text class="field" x="12" y="79">FK progreso_id</text><text class="field" x="12" y="100">tipo, valor, unidad</text></g>
+  <g transform="translate(940 510)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">foto_progreso</text><text class="field" x="12" y="58">PK id_foto</text><text class="field" x="12" y="79">FK progreso_id</text><text class="field" x="12" y="100">url</text></g>
+  <!-- Row 4 -->
+  <g transform="translate(40 750)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">finanza</text><text class="field" x="12" y="58">PK id_movimiento</text><text class="field" x="12" y="79">FK categoria_id, contrato_id</text><text class="field" x="12" y="100">monto, fecha</text></g>
+  <g transform="translate(340 750)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="85"/><text class="name" x="100" y="23">detalle_comida</text><text class="field" x="12" y="58">PK id_detalle</text><text class="field" x="12" y="79">FK comida_id</text><text class="field" x="12" y="100">alimento, cantidad, calorias</text></g>
+  <g transform="translate(640 750)"><rect class="head" width="200" height="35"/><rect class="card" y="35" width="200" height="110"/><text class="name" x="100" y="23">seguimiento_cliente</text><text class="field" x="12" y="58">PK id_seguimiento</text><text class="field" x="12" y="79">FK cliente_id</text><text class="field" x="12" y="100">FK opcionales: asignacion,</text><text class="field" x="12" y="121">progreso, plan nutricional</text></g>
+  <text x="40" y="990" class="field">Las FK indican relaciones; detalle_comida, medidas y fotos usan borrado en cascada desde su propietario.</text>
+</svg>
