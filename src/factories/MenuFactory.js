@@ -5,6 +5,9 @@ import ProgresoMenu from '../commands/ProgresoMenu.js';
 import FinanzaMenu from '../commands/FinanzaMenu.js';
 import NutricionMenu from '../commands/NutricionMenu.js';
 import SeguimientoMenu from '../commands/SeguimientoMenu.js';
+import RutinaMenu from '../commands/RutinaMenu.js';
+import DetallePlanMenu from '../commands/DetallePlanMenu.js';
+import PortalClienteMenu from '../commands/PortalClienteMenu.js';
 
 export class MenuFactory {
   static crearMenu(tipo) {
@@ -23,6 +26,12 @@ export class MenuFactory {
         return NutricionMenu;
       case 'seguimiento':
         return SeguimientoMenu;
+      case 'rutina':
+        return RutinaMenu;
+      case 'paquete':
+        return DetallePlanMenu;
+      case 'portal_cliente':
+        return PortalClienteMenu;
       default:
         throw new Error('Módulo de menú no encontrado.');
     }

@@ -1,6 +1,9 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { PlanService } from '../services/PlanService.js';
+import { pausar, mostrarError } from '../utils/consola.js';
+
+const NIVELES = ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'];
 
 export default class PlanMenu {
   static async mostrarMenu() {
@@ -28,9 +31,7 @@ export default class PlanMenu {
       try {
         if (opcion === 'listar') {
           console.log(chalk.yellow('\n--- Lista de Planes de Entrenamiento ---'));
-          const planes = await PlanService.obtenerPlanes();
-          console.table(planes);
-          await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+          console.table(await PlanService.obtenerPlanes());
         } else if (opcion === 'registrar') {
           console.log(chalk.yellow('\n--- Registrar Nuevo Plan ---'));
           const nuevoPlan = await inquirer.prompt([
@@ -38,13 +39,11 @@ export default class PlanMenu {
             { type: 'input', name: 'descripcion', message: 'Descripción:' },
             { type: 'input', name: 'duracion_semanas', message: 'Duración en semanas (número):' },
             { type: 'input', name: 'metas_fisicas', message: 'Metas físicas:' },
-            { type: 'select', name: 'nivel', message: 'Nivel:', choices: ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'] },
+            { type: 'select', name: 'nivel', message: 'Nivel:', choices: NIVELES },
             { type: 'input', name: 'precio', message: 'Precio:' }
           ]);
-
-          await PlanService.crearPlan(nuevoPlan);
-          console.log(chalk.green('✔ Plan de entrenamiento registrado con éxito.'));
-          await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+          const id = await PlanService.crearPlan(nuevoPlan);
+          console.log(chalk.green(`✔ Plan de entrenamiento registrado con éxito. ID: ${id}`));
         } else if (opcion === 'actualizar') {
           const { id } = await inquirer.prompt([{ type: 'input', name: 'id', message: 'ID del plan a actualizar:' }]);
           const datos = await inquirer.prompt([
@@ -52,7 +51,7 @@ export default class PlanMenu {
             { type: 'input', name: 'descripcion', message: 'Nueva descripción:' },
             { type: 'input', name: 'duracion_semanas', message: 'Duración en semanas:' },
             { type: 'input', name: 'metas_fisicas', message: 'Metas físicas:' },
-            { type: 'select', name: 'nivel', message: 'Nivel:', choices: ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'] },
+            { type: 'select', name: 'nivel', message: 'Nivel:', choices: NIVELES },
             { type: 'input', name: 'precio', message: 'Precio:' }
           ]);
           const actualizados = await PlanService.actualizarPlan(id, datos);
@@ -65,9 +64,10 @@ export default class PlanMenu {
           salir = true;
         }
       } catch (error) {
-        console.log(chalk.red(`\n[Error]: ${error.message}`));
-        await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+        mostrarError(error);
       }
+
+      if (!salir) await pausar();
     }
   }
 }

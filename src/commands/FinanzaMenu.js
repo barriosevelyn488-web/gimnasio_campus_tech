@@ -1,6 +1,14 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { FinanzaService } from '../services/FinanzaService.js';
+import { pausar, mostrarError } from '../utils/consola.js';
+import { formatearMoneda } from '../utils/formatters.js';
+
+const preguntasFiltro = [
+  { type: 'input', name: 'desde', message: 'Desde (opcional YYYY-MM-DD):' },
+  { type: 'input', name: 'hasta', message: 'Hasta (opcional YYYY-MM-DD):' },
+  { type: 'input', name: 'cliente_id', message: 'Cliente ID (opcional):' }
+];
 
 export default class FinanzaMenu {
   static async mostrarMenu() {
@@ -27,32 +35,40 @@ export default class FinanzaMenu {
       try {
         if (opcion === 'listar') {
           console.log(chalk.yellow('\n--- Historial de Movimientos ---'));
-          const movimientos = await FinanzaService.obtenerMovimientos();
-          console.table(movimientos);
-          await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+          const movimientos = await FinanzaService.obtenerMovimientos(await inquirer.prompt(preguntasFiltro));
+          console.table(movimientos.map((m) => ({ ...m, monto: formatearMoneda(m.monto) })));
         } else if (opcion === 'registrar') {
           console.log(chalk.yellow('\n--- Registrar Movimiento Financiero ---'));
+          const categorias = await FinanzaService.obtenerCategorias();
           const datos = await inquirer.prompt([
-            { type: 'input', name: 'categoria_id', message: 'ID de la Categoría de Finanza:' },
-            { type: 'input', name: 'monto', message: 'Monto ($):' },
+            {
+              type: 'select',
+              name: 'categoria_id',
+              message: 'Categoría:',
+              choices: categorias.map((c) => ({ name: `${c.tipo} - ${c.nombre}`, value: c.id_categoria }))
+            },
+            { type: 'input', name: 'monto', message: `Monto (${process.env.MONEDA ?? 'GTQ'}):` },
             { type: 'input', name: 'fecha', message: 'Fecha (YYYY-MM-DD):' },
             { type: 'input', name: 'descripcion', message: 'Descripción:' },
-            { type: 'input', name: 'contrato_id', message: 'ID de contrato (opcional):' }
+            { type: 'input', name: 'contrato_id', message: 'ID de contrato (opcional, solo ingresos):' }
           ]);
-
-          await FinanzaService.crearMovimiento(datos);
-          console.log(chalk.green('✔ Movimiento financiero registrado con éxito.'));
-          await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+          const id = await FinanzaService.crearMovimiento(datos);
+          console.log(chalk.green(`✔ Movimiento financiero registrado con éxito. ID: ${id}`));
         } else if (opcion === 'balance') {
-          const f = await inquirer.prompt([{ type: 'input', name: 'desde', message: 'Desde (opcional YYYY-MM-DD):' },{ type: 'input', name: 'hasta', message: 'Hasta (opcional YYYY-MM-DD):' },{ type: 'input', name: 'cliente_id', message: 'Cliente ID (opcional):' }]);
-          console.table(await FinanzaService.obtenerBalance(Object.fromEntries(Object.entries(f).filter(([,v])=>v))));
+          const totales = await FinanzaService.obtenerBalance(await inquirer.prompt(preguntasFiltro));
+          console.table({
+            Ingresos: formatearMoneda(totales.ingresos),
+            Egresos: formatearMoneda(totales.egresos),
+            Balance: formatearMoneda(totales.balance)
+          });
         } else if (opcion === 'salir') {
           salir = true;
         }
       } catch (error) {
-        console.log(chalk.red(`\n[Error]: ${error.message}`));
-        await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+        mostrarError(error);
       }
+
+      if (!salir) await pausar();
     }
   }
 }

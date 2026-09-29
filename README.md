@@ -61,7 +61,7 @@ Las operaciones con varias escrituras relacionadas usan transacciones, como la a
 
 ## Base de datos
 
-`database/schema.sql` es la fuente de verdad para tablas y relaciones. `database/seed.sql` contiene datos de demostración. Consulta [normalización](database/normalization.md). Si aplicas el esquema a una base existente, respalda y migra primero: `CREATE TABLE IF NOT EXISTS` no modifica tablas que ya existen.
+`database/schema.sql` es la fuente de verdad para tablas y relaciones. `database/seed.sql` contiene datos de demostración. Consulta [normalización](database/normalization.md). Si aplicas el esquema a una base existente, respalda y migra primero: `CREATE TABLE IF NOT EXISTS` no modifica tablas que ya existen. Para agregar `rutina`, `detalle_plan` y las columnas nuevas de seguimiento a una base existente, ejecuta una sola vez y en orden `database/migrations/001_rutina_detalle_plan.sql` y `database/migrations/002_seguimiento_registrado_por.sql`.
 
 ## Documentación del proyecto
 
