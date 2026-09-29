@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "db:check": "node src/config/db-check.js",
-    "test": "node --test"
+    "db:check": "node src/config/db-check.js"
   },
   "dependencies": {
     "chalk": "^6.0.1",

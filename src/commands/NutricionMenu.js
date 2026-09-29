@@ -17,8 +17,9 @@ export default class NutricionMenu {
           choices: [
             { name: '1. Listar planes nutricionales', value: 'listar' },
             { name: '2. Registrar plan nutricional', value: 'registrar' },
-            { name: '3. Registrar comida (datos en formato JSON)', value: 'comida' },
-            { name: '4. Reporte semanal', value: 'reporte' },
+            { name: '3. Actualizar plan nutricional', value: 'actualizar' },
+            { name: '4. Registrar comida (datos en formato JSON)', value: 'comida' },
+            { name: '5. Reporte semanal', value: 'reporte' },
             { name: '0. Volver al menú principal', value: 'salir' }
           ]
         }
@@ -43,6 +44,19 @@ export default class NutricionMenu {
           await NutricionService.crearPlan(datos);
           console.log(chalk.green('✔ Plan nutricional registrado con éxito.'));
           await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+        } else if (opcion === 'actualizar') {
+          const { id } = await inquirer.prompt([{ type: 'input', name: 'id', message: 'ID del plan nutricional:' }]);
+          const datos = await inquirer.prompt([
+            { type: 'input', name: 'cliente_id', message: 'ID del cliente:' },
+            { type: 'input', name: 'plan_entrenamiento_id', message: 'ID del plan de entrenamiento:' },
+            { type: 'input', name: 'descripcion', message: 'Descripción:' },
+            { type: 'input', name: 'calorias_estimadas', message: 'Calorías estimadas:' },
+            { type: 'input', name: 'fecha_inicio', message: 'Inicio (YYYY-MM-DD):' },
+            { type: 'input', name: 'fecha_fin', message: 'Fin (YYYY-MM-DD):' },
+            { type: 'select', name: 'estado', message: 'Estado:', choices: ['ACTIVO', 'FINALIZADO', 'CANCELADO'] }
+          ]);
+          const actualizados = await NutricionService.actualizarPlan(id, datos);
+          console.log(actualizados ? chalk.green('Plan nutricional actualizado.') : chalk.yellow('No hubo cambios o el plan no existe.'));
         } else if (opcion === 'comida') {
           const { json } = await inquirer.prompt([{ type: 'input', name: 'json', message: 'JSON de comida y alimentos:' }]);
           const id = await NutricionService.registrarComida(JSON.parse(json)); console.log(chalk.green(`Comida registrada: ${id}`));

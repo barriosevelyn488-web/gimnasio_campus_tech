@@ -18,6 +18,8 @@ export default class PlanMenu {
           choices: [
             { name: '1. Listar planes', value: 'listar' },
             { name: '2. Registrar nuevo plan', value: 'registrar' },
+            { name: '3. Actualizar plan', value: 'actualizar' },
+            { name: '4. Desactivar plan', value: 'eliminar' },
             { name: '0. Volver al menú principal', value: 'salir' }
           ]
         }
@@ -43,6 +45,22 @@ export default class PlanMenu {
           await PlanService.crearPlan(nuevoPlan);
           console.log(chalk.green('✔ Plan de entrenamiento registrado con éxito.'));
           await inquirer.prompt([{ type: 'input', name: 'continuar', message: 'Presiona Enter para continuar...' }]);
+        } else if (opcion === 'actualizar') {
+          const { id } = await inquirer.prompt([{ type: 'input', name: 'id', message: 'ID del plan a actualizar:' }]);
+          const datos = await inquirer.prompt([
+            { type: 'input', name: 'nombre', message: 'Nuevo nombre:' },
+            { type: 'input', name: 'descripcion', message: 'Nueva descripción:' },
+            { type: 'input', name: 'duracion_semanas', message: 'Duración en semanas:' },
+            { type: 'input', name: 'metas_fisicas', message: 'Metas físicas:' },
+            { type: 'select', name: 'nivel', message: 'Nivel:', choices: ['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'] },
+            { type: 'input', name: 'precio', message: 'Precio:' }
+          ]);
+          const actualizados = await PlanService.actualizarPlan(id, datos);
+          console.log(actualizados ? chalk.green('Plan actualizado.') : chalk.yellow('No hubo cambios o el plan no existe.'));
+        } else if (opcion === 'eliminar') {
+          const { id } = await inquirer.prompt([{ type: 'input', name: 'id', message: 'ID del plan a desactivar:' }]);
+          const desactivados = await PlanService.eliminarPlan(id);
+          console.log(desactivados ? chalk.green('Plan desactivado; se conserva su historial.') : chalk.yellow('El plan no existe o ya estaba inactivo.'));
         } else if (opcion === 'salir') {
           salir = true;
         }

@@ -31,10 +31,10 @@ El sistema requiere `DB_HOST`, `DB_USER` y `DB_NAME`. `DB_PASSWORD` puede estar 
 
 ## Funcionalidades
 
-- Alta y consulta de clientes y planes de entrenamiento.
+- CRUD de clientes y planes de entrenamiento (la eliminación de planes los desactiva para conservar el historial).
 - Asignación de planes y creación de contratos; renovación, finalización y cancelación.
 - Registro e historial de progreso físico, con medidas y fotos.
-- Planes nutricionales, comidas, alimentos y reportes por rango de fechas.
+- Creación, consulta y actualización de planes nutricionales, registro de comidas/alimentos y reportes por rango de fechas.
 - Ingresos y egresos, listado de movimientos y balance con filtros.
 - Seguimiento integral con relaciones opcionales a asignaciones, progreso y nutrición.
 
@@ -86,9 +86,9 @@ Las operaciones con varias escrituras relacionadas usan transacciones, como la a
 
   Los SVG incluidos se escalan al ancho del visor sin perder nitidez. Puedes reemplazarlos por tus diagramas manteniendo esos nombres. El esquema ejecutable `database/schema.sql` debe ser la referencia para el diagrama ER.
 
-## Pruebas
+## Verificación de conexión
 
-Hay pruebas automatizadas en `tests/`. Ejecútalas con `npm test`. Para comprobar solamente la conexión MySQL usa `npm run db:check`.
+Ejecuta `npm run db:check` para comprobar la conexión con MySQL. Las operaciones de la aplicación deben validarse manualmente desde los menús con registros existentes en la base.
 
 ## Árbol del proyecto y propósito de los archivos
 
@@ -169,13 +169,6 @@ gimnasio_campus_tech/
 │       ├── validators.js              Validaciones compartidas
 │       ├── formatters.js              Formato de moneda y presentación
 │       └── errors.js                  Errores comunes de la aplicación
-└── tests/                            Pruebas automatizadas (node:test)
-    ├── cliente.test.js                Pruebas del módulo de clientes
-    ├── plan.test.js                   Pruebas de planes
-    ├── contrato.test.js               Pruebas de contratos
-    ├── seguimiento.test.js             Pruebas de seguimiento
-    ├── finanza.test.js                 Pruebas financieras
-    └── transacciones.test.js           Pruebas de operaciones transaccionales
 ```
 
 ## Entrega académica

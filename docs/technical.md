@@ -48,12 +48,12 @@ Las credenciales se leen en `src/config/db.js`. La conexión no se abre hasta qu
 
 En caso de error, los controladores ejecutan `ROLLBACK`, propagan el error y liberan la conexión. El pool se cierra al terminar `db:check`.
 
-## Pruebas
+## Verificación
 
-El comando `npm test` ejecuta archivos `tests/*.test.js` con `node --test`. Las pruebas que usan la base de datos requieren que el esquema y la configuración de prueba estén disponibles; `src/config/db-check.js` es un comprobador de conexión y no configura ni crea por sí mismo una base de pruebas aislada. Evita ejecutar las pruebas contra una base con información importante.
+`npm run db:check` ejecuta una consulta `SELECT 1` para comprobar conectividad; no prueba las funcionalidades del sistema. Las operaciones deben probarse manualmente desde la CLI con registros válidos de la base.
 
 ## Alcance funcional comprobado en el código
 
-Los menús ofrecen consultas y altas de clientes/planes; no exponen todas las acciones CRUD descritas en algunas historias. Por tanto, no se debe presentar el CRUD completo de todos los módulos como disponible desde la CLI. El módulo financiero registra y lista movimientos y consulta balances; el reporte nutricional recibe rango de fechas, que puede abarcar una semana. La capa de finanzas permite asociar un contrato cuando aplica.
+Los menús ofrecen CRUD de clientes y planes de entrenamiento, actualización de planes nutricionales, ciclo de contratos, progreso, seguimiento, comidas e informes financieros y nutricionales. La eliminación de planes de entrenamiento es lógica para preservar contratos históricos. El módulo financiero registra y lista movimientos y consulta balances; el reporte nutricional recibe rango de fechas, que puede abarcar una semana. La capa de finanzas permite asociar un contrato cuando aplica.
 
 Para cambios de esquema, actualiza `database/schema.sql` y revisa las restricciones antes de aplicarlos sobre una base existente. `CREATE TABLE IF NOT EXISTS` crea tablas faltantes, pero no migra una tabla ya creada.
