@@ -219,6 +219,12 @@ erDiagram
 
 ```
 
+
+## DIAGRAMA BASE DE DATOS
+
+![alt text](image.png)
+
+
 en el siguiente enlace esta la grabacion del video explicativo
 https://drive.google.com/drive/folders/1EHoH4rAuWTKglPZUkQhkboBwUMvu51vb?usp=sharing
 
