@@ -29,3 +29,7 @@
 ![alt text](image.png)
 
 ![alt text](image-1.png)
+
+link de clickup
+
+https://app.clickup.com/90132008362/v/li/1000230000010727
